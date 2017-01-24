@@ -3,9 +3,9 @@ import cv2
 
 cap = cv2.VideoCapture(0)
 
-# Color values - currently set to orange
-lower_color = np.array([0, 96, 122])
-upper_color = np.array([60, 255, 205])
+# Color values - currently set to green vision tape
+lower_color = np.array([45, 0, 241])
+upper_color = np.array([49, 37, 255])
 
 while True:
     _, frame = cap.read()
@@ -24,7 +24,7 @@ while True:
 
     ncontours = []
     for contour in contours:
-        if cv2.contourArea(contour) > 300:
+        if cv2.contourArea(contour) > 400:
             ncontours.append(contour)
 
     #print "Number of contours: ", len(ncontours)
