@@ -1,7 +1,9 @@
 import numpy as np
 import cv2
+import serial
 
 cap = cv2.VideoCapture(0)
+ser = serial.Serial('/dev/ttyUSB0')
 
 # Color values - currently set to green vision tape
 lower_color = np.array([45, 0, 241])
