@@ -1,13 +1,38 @@
 import numpy as np
 import cv2
 import serial
+import time
+from networktables import NetworkTable
 
-cap = cv2.VideoCapture(0)
-ser = serial.Serial('/dev/ttyUSB0')
+cap = cv2.VideoCapture(1)
+port = "COM3"
+baud = 9600
+
+#ser = serial.Serial(port, baud, timeout=1)
+# open the serial port
+#if ser.isOpen():
+ #   print(ser.name + ' is open...')
+
+NetworkTable.initialize("10.18.16.2")
+
+sd = NetworkTable.getTable("SmartDashboard")
+
+min_area = 0.0
+min_perimeter = 0.0
+min_width = 0.0
+max_width = 1000.0
+min_height = 100.0
+max_height = 1000.0
+solidity = [0, 100]
+max_vertices = 1000000.0
+min_vertices = 0.0
+min_ratio = 0.0
+max_ratio = 1.0
 
 # Color values - currently set to green vision tape
-lower_color = np.array([45, 0, 241])
-upper_color = np.array([49, 37, 255])
+lower_color = np.array([0, 115, 179])
+upper_color = np.array([92, 207, 255])
+
 
 while True:
     _, frame = cap.read()
@@ -40,6 +65,13 @@ while True:
         # Draw the bounding rectangle
         rect = cv2.boundingRect(c)
         x, y, w, h = cv2.boundingRect(c)
+
+        if (h < min_height or h > max_height):
+            continue
+
+        ratio = (float)(w) / h
+        if (ratio < min_ratio or ratio > max_ratio):
+            continue
         frame = cv2.rectangle(frame, (x, y), (x + w, y + h), (0, 255, 0), 2)
 
         # Draw center of rectangle
@@ -47,8 +79,14 @@ while True:
         cX = int(M["m10"] / M["m00"])
         cY = int(M["m01"] / M["m00"])
         cv2.circle(frame, (cX, cY), 7, (255, 255, 255), -1)
+
         print "Center: ", cX, cY
 
+        sd.putNumber('X', cX)
+        sd.putNumber('Y', cY)
+
     cv2.imshow('Contour Window', frame)
+
+ser.close()
 
 cv2.destroyAllWindows()
