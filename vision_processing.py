@@ -30,9 +30,12 @@ min_ratio = 0.0
 max_ratio = 1.0
 
 # Color values - currently set to green vision tape
-lower_color = np.array([0, 115, 179])
-upper_color = np.array([92, 207, 255])
+lower_color = np.array([15, 0, 234])
+upper_color = np.array([100, 77, 255])
 
+stagedX = []
+stagedY = []
+stagedArea = []
 
 while True:
     _, frame = cap.read()
@@ -55,7 +58,9 @@ while True:
             ncontours.append(contour)
 
     #print "Number of contours: ", len(ncontours)
-
+    cX = []
+    cY = []
+    cArea = []
     # loop over the contours
     for c in ncontours:
 
@@ -76,14 +81,16 @@ while True:
 
         # Draw center of rectangle
         M = cv2.moments(c)
-        cX = int(M["m10"] / M["m00"])
-        cY = int(M["m01"] / M["m00"])
-        cv2.circle(frame, (cX, cY), 7, (255, 255, 255), -1)
+        cX.append(int(M["m10"] / M["m00"]))
+        cY.append(int(M["m01"] / M["m00"]))
+        cArea.append(int(M['m00']))
+        #cv2.circle(frame, (int(cX), int(cY)), 7, (255, 255, 255), -1)
 
         print "Center: ", cX, cY
 
-        sd.putNumber('X', cX)
-        sd.putNumber('Y', cY)
+    sd.putNumberArray('X', cX)
+    sd.putNumberArray('Y', cY)
+    sd.putNumberArray('Area', cArea)
 
     cv2.imshow('Contour Window', frame)
 
