@@ -1,21 +1,16 @@
 import numpy as np
 import cv2
 import serial
-import time
-from networktables import NetworkTable
 
 cap = cv2.VideoCapture(1)
 port = "COM3"
 baud = 9600
 
-#ser = serial.Serial(port, baud, timeout=1)
+ser = serial.Serial(port, baud, timeout=1)
 # open the serial port
-#if ser.isOpen():
- #   print(ser.name + ' is open...')
+if ser.isOpen():
+    print(ser.name + ' is open...')
 
-NetworkTable.initialize("10.18.16.2")
-
-sd = NetworkTable.getTable("SmartDashboard")
 
 min_area = 0.0
 min_perimeter = 0.0
@@ -32,10 +27,6 @@ max_ratio = 1.0
 # Color values - currently set to green vision tape
 lower_color = np.array([15, 0, 234])
 upper_color = np.array([100, 77, 255])
-
-stagedX = []
-stagedY = []
-stagedArea = []
 
 while True:
     _, frame = cap.read()
@@ -57,11 +48,12 @@ while True:
         if cv2.contourArea(contour) > 400:
             ncontours.append(contour)
 
-    #print "Number of contours: ", len(ncontours)
-    cX = []
-    cY = []
-    cArea = []
-    # loop over the contours
+    # print "Number of contours: ", len(ncontours)
+
+    kX, tX = 0;
+    kY, tY = 0;
+
+    #loop over the contours
     for c in ncontours:
 
         # Draw the contour and show it
@@ -81,19 +73,31 @@ while True:
 
         # Draw center of rectangle
         M = cv2.moments(c)
-        cX.append(int(M["m10"] / M["m00"]))
-        cY.append(int(M["m01"] / M["m00"]))
-        cArea.append(int(M['m00']))
-        #cv2.circle(frame, (int(cX), int(cY)), 7, (255, 255, 255), -1)
+        cX = int(M["m10"] / M["m00"])
+        cY = int(M["m01"] / M["m00"])
+        cv2.circle(frame, (cX, cY), 7, (255, 255, 255), -1)
+        # print "Center: ", cX, cY
 
-        print "Center: ", cX, cY
+        kX += cX;
+        kY += cY;
 
-    sd.putNumberArray('X', cX)
-    sd.putNumberArray('Y', cY)
-    sd.putNumberArray('Area', cArea)
+        tX += 1;
+        tY += 1;
+
+    X = kX / tX;
+    Y = kY / tY;
+
+    if ser.isOpen() == False:
+        ser.open()
+
+    ser.write(X + " " + Y)
+    ser.close()
+
+    kX = 0;
+    kY = 0;
+    tX = 0;
+    tY = 0;
 
     cv2.imshow('Contour Window', frame)
-
-ser.close()
 
 cv2.destroyAllWindows()
