@@ -6,10 +6,10 @@ cap = cv2.VideoCapture(1)
 port = "COM3"
 baud = 9600
 
-ser = serial.Serial(port, baud, timeout=1)
+# ser = serial.Serial(port, baud, timeout=1)
 # open the serial port
-if ser.isOpen():
-    print(ser.name + ' is open...')
+# if ser.isOpen():
+#     print(ser.name + ' is open...')
 
 
 min_area = 0.0
@@ -25,8 +25,8 @@ min_ratio = 0.0
 max_ratio = 1.0
 
 # Color values - currently set to green vision tape
-lower_color = np.array([15, 0, 234])
-upper_color = np.array([100, 77, 255])
+lower_color = np.array([11.33093525179856, 55.03597122302158, 174.28057553956833])
+upper_color = np.array([90.60606060606061, 255, 255])
 
 while True:
     _, frame = cap.read()
@@ -50,8 +50,10 @@ while True:
 
     # print "Number of contours: ", len(ncontours)
 
-    kX, tX = 0;
-    kY, tY = 0;
+    kX = 1
+    tX = 1
+    kY = 1
+    tY = 1
 
     #loop over the contours
     for c in ncontours:
@@ -87,11 +89,11 @@ while True:
     X = kX / tX;
     Y = kY / tY;
 
-    if ser.isOpen() == False:
-        ser.open()
-
-    ser.write(X + " " + Y)
-    ser.close()
+    # if ser.isOpen() == False:
+    #     ser.open()
+    #
+    # ser.write(X + " " + Y)
+    # ser.close()
 
     kX = 0;
     kY = 0;
