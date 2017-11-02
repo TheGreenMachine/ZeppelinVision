@@ -2,16 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="e826f9b2-86e8-4ae7-b964-59eaadd9dedb" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Capture.PNG" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/VT1.PNG" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/VT2.PNG" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/VT3.PNG" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/VT4.PNG" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/VT5.PNG" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/VT6.PNG" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/VT7.PNG" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/VT8.PNG" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/VT9.PNG" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/vision_processing.py" afterPath="$PROJECT_DIR$/vision_processing.py" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -21,7 +12,7 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="CoverageDataManager">
-    <SUITE FILE_PATH="coverage/ZeppelinVision$vision_processing.coverage" NAME="vision_processing Coverage Results" MODIFIED="1509583639528" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/ZeppelinVision$vision_processing.coverage" NAME="vision_processing Coverage Results" MODIFIED="1509585989047" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
   <component name="CreatePatchCommitExecutor">
     <option name="PATCH_PATH" value="" />
@@ -31,8 +22,8 @@
       <file leaf-file-name="vision_processing.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/vision_processing.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="273">
-              <caret line="13" column="0" lean-forward="true" selection-start-line="13" selection-start-column="0" selection-end-line="13" selection-end-column="0" />
+            <state relative-caret-position="2247">
+              <caret line="107" column="11" lean-forward="true" selection-start-line="107" selection-start-column="11" selection-end-line="107" selection-end-column="11" />
               <folding>
                 <element signature="e#0#18#0" expanded="true" />
               </folding>
@@ -604,8 +595,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/vision_processing.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="273">
-          <caret line="13" column="0" lean-forward="true" selection-start-line="13" selection-start-column="0" selection-end-line="13" selection-end-column="0" />
+        <state relative-caret-position="2247">
+          <caret line="107" column="11" lean-forward="true" selection-start-line="107" selection-start-column="11" selection-end-line="107" selection-end-column="11" />
           <folding>
             <element signature="e#0#18#0" expanded="true" />
           </folding>

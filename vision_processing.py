@@ -1,10 +1,12 @@
 import numpy as np
 import cv2
-import serial
+from networktables import NetworkTables
+# import serial
 
-cap = cv2.VideoCapture(1)
-port = "COM3"
-baud = 9600
+cap = cv2.VideoCapture(0)
+NetworkTables.initialize(server='10.18.16.1')
+# port = "COM3"
+# baud = 9600
 
 # ser = serial.Serial(port, baud, timeout=1)
 # open the serial port
@@ -23,6 +25,8 @@ max_vertices = 1000000.0
 min_vertices = 0.0
 min_ratio = 0.0
 max_ratio = 1.0
+
+table = NetworkTables.getTable("SmartDashboard")
 
 # Color values - currently set to green vision tape
 lower_color = np.array([11.33093525179856, 55.03597122302158, 174.28057553956833])
@@ -88,6 +92,9 @@ while True:
 
     X = kX / tX;
     Y = kY / tY;
+
+    table.putNumber("visionX", X)
+    table.putNumber("visionY", Y)
 
     # if ser.isOpen() == False:
     #     ser.open()
