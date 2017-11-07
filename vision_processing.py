@@ -3,7 +3,7 @@ import cv2
 from networktables import NetworkTables
 # import serial
 
-cap = cv2.VideoCapture(0)
+cap = cv2.VideoCapture(1)
 NetworkTables.initialize(server='10.18.16.1')
 # port = "COM3"
 # baud = 9600
@@ -29,7 +29,7 @@ max_ratio = 1.0
 table = NetworkTables.getTable("SmartDashboard")
 
 # Color values - currently set to green vision tape
-lower_color = np.array([11.33093525179856, 55.03597122302158, 174.28057553956833])
+lower_color = np.array([50.0, 55.03597122302158, 174.28057553956833])
 upper_color = np.array([90.60606060606061, 255, 255])
 
 while True:
