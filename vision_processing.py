@@ -3,8 +3,8 @@ import cv2
 from networktables import NetworkTables
 # import serial
 
-cap = cv2.VideoCapture(1)
-NetworkTables.initialize(server='10.18.16.1')
+cap = cv2.VideoCapture(0)
+NetworkTables.initialize(server='10.18.16.2')
 # port = "COM3"
 # baud = 9600
 
@@ -68,6 +68,7 @@ while True:
         # Draw the bounding rectangle
         rect = cv2.boundingRect(c)
         x, y, w, h = cv2.boundingRect(c)
+        # print("xywh: {} {} {} {}".format(x,y,w,h))
 
         if (h < min_height or h > max_height):
             continue
@@ -82,7 +83,7 @@ while True:
         cX = int(M["m10"] / M["m00"])
         cY = int(M["m01"] / M["m00"])
         cv2.circle(frame, (cX, cY), 7, (255, 255, 255), -1)
-        # print "Center: ", cX, cY
+        print("Center: {} {}".format( cX, cY))
 
         kX += cX;
         kY += cY;
