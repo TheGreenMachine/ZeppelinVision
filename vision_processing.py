@@ -1,3 +1,4 @@
+import sys
 import numpy as np
 import cv2
 from networktables import NetworkTables
@@ -28,6 +29,11 @@ max_ratio = 1.0
 
 table = NetworkTables.getTable("SmartDashboard")
 
+visionFlag = sys.argv[1] == "-v"
+print "Vision flag is: {}".format(visionFlag)
+print sys.argv[1]
+
+
 # Color values - currently set to green vision tape
 lower_color = np.array([50.0, 55.03597122302158, 174.28057553956833])
 upper_color = np.array([90.60606060606061, 255, 255])
@@ -41,7 +47,8 @@ while True:
     # define range of color in HSV
     mask = cv2.inRange(hsv, lower_color, upper_color)
 
-    cv2.imshow('Mask', mask)
+    if visionFlag:
+        cv2.imshow('Mask', mask)
 
     k = cv2.waitKey(5) & 0xFF
 
@@ -94,8 +101,12 @@ while True:
     X = kX / tX;
     Y = kY / tY;
 
-    table.putNumber("visionX", X)
-    table.putNumber("visionY", Y)
+    if len(ncontours) == 0:
+        table.putNumber("visionX", -1)
+        table.putNumber("visionY", -1)
+    else:
+        table.putNumber("visionX", X)
+        table.putNumber("visionY", Y)
 
     # if ser.isOpen() == False:
     #     ser.open()
@@ -107,7 +118,7 @@ while True:
     kY = 0;
     tX = 0;
     tY = 0;
-
-    cv2.imshow('Contour Window', frame)
+    if visionFlag:
+        cv2.imshow('Contour Window', frame)
 
 cv2.destroyAllWindows()
