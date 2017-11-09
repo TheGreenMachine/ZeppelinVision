@@ -28,10 +28,17 @@ min_ratio = 0.0
 max_ratio = 1.0
 
 table = NetworkTables.getTable("SmartDashboard")
+if table:
+    print "table OK"
+table.putNumber("visionX", -1)
+table.putNumber("visionY", -1)
 
-visionFlag = sys.argv[1] == "-v"
-print "Vision flag is: {}".format(visionFlag)
-print sys.argv[1]
+visionFlag = False
+debugFlag = False
+if len(sys.argv) > 1:
+    visionFlag = sys.argv[1] == "-v" or sys.argv[2] == "-v"
+    debugFlag = sys.argv[1] == "-d" or sys.argv[2] == "-d"
+    print "Vision flag is: {};  debug flag: {}".format(visionFlag, debugFlag)
 
 
 # Color values - currently set to green vision tape
@@ -61,10 +68,10 @@ while True:
 
     # print "Number of contours: ", len(ncontours)
 
-    kX = 1
-    tX = 1
-    kY = 1
-    tY = 1
+    kX = 0
+    tX = 0
+    kY = 0
+    tY = 0
 
     #loop over the contours
     for c in ncontours:
@@ -90,23 +97,33 @@ while True:
         cX = int(M["m10"] / M["m00"])
         cY = int(M["m01"] / M["m00"])
         cv2.circle(frame, (cX, cY), 7, (255, 255, 255), -1)
-        print("Center: {} {}".format( cX, cY))
+        #print("Center: {} {}".format( cX, cY))
 
-        kX += cX;
-        kY += cY;
+        kX += cX
+        kY += cY
 
-        tX += 1;
-        tY += 1;
+        tX += 1
+        tY += 1
 
-    X = kX / tX;
-    Y = kY / tY;
+    if tX > 0 and tY > 0:
+        X = kX / tX
+        Y = kY / tY
+    else:
+        X = -1
+        Y = -1
+        if debugFlag:
+            print "tX or tY = 0"
 
     if len(ncontours) == 0:
         table.putNumber("visionX", -1)
         table.putNumber("visionY", -1)
+        if debugFlag:
+            print "TARGET NOT FOUND"
     else:
         table.putNumber("visionX", X)
         table.putNumber("visionY", Y)
+        if debugFlag:
+            print "vision X, Y = {} {}".format(X, Y)
 
     # if ser.isOpen() == False:
     #     ser.open()
