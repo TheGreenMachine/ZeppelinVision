@@ -1,0 +1,6 @@
+#/bin/bash
+#
+echo "This is running"
+
+sudo ifconfig wlan0 down
+sudo -u pi python /home/pi/ZeppelinVision/vision_processing.py 
